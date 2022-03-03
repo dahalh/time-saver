@@ -25,13 +25,35 @@ function App() {
     }
   };
 
+  // delete a task from the bad list
+  const handleOnDeleteBadList = (i) => {
+    console.log(i);
+    if (window.confirm("Are you sure you want to delete this?")) {
+      const newArg = badList.filter((item, index) => index !== i);
+      setBadList(newArg);
+    }
+  };
+
   // take item from goodList and put it in badList
   const markAsBad = (i) => {
     const selectedItem = goodList[i];
     setBadList([...badList, selectedItem]);
-    const newArg = badList.filter((item, index) => index !== i);
+
+    const newArg = goodList.filter((item, index) => index !== i);
     setGoodList(newArg);
   };
+
+  // take item from badList and put it in goodList
+  const markAsGood = (i) => {
+    const selectedItem = badList[i];
+    setGoodList([...goodList, selectedItem]);
+
+    const newArg = badList.filter((item, index) => index !== i);
+    setBadList(newArg);
+  };
+
+  const ttlBadHours = badList.reduce((acc, curr) => acc + curr.hr, 0);
+  const ttlGoodHours = badList.reduce((subttl, item) => subttl + item.hr, 0);
   return (
     <div>
       <div className="wrapper">
@@ -46,9 +68,14 @@ function App() {
               handleOnDeleteGoodList={handleOnDeleteGoodList}
               markAsBad={markAsBad}
             />
-            <BadList badList={badList} />
+            <BadList
+              badList={badList}
+              markAsGood={markAsGood}
+              handleOnDeleteBadList={handleOnDeleteBadList}
+              ttlBadHours={ttlBadHours}
+            />
           </div>
-          <TotalHours />
+          <TotalHours total={ttlBadHours + ttlGoodHours} />
         </div>
       </div>
     </div>

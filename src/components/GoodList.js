@@ -1,7 +1,12 @@
 import React from "react";
 
 // receiving goodList from App.js
-export const GoodList = ({ goodList, handleOnDeleteGoodList, markAsBad }) => {
+export const GoodList = ({
+  goodList,
+  handleOnDeleteGoodList,
+  markAsBad,
+  ttlGoodHours,
+}) => {
   console.log(goodList);
   return (
     <div className="col-md-6 mb-5">
